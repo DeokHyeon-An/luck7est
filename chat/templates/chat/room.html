@@ -1,0 +1,91 @@
+
+{% extends './base.html' %}
+  
+{% block contents %}
+    <div>방제 : {{ room.title }}</div>
+    <br>투표 &nbsp;&nbsp; {% if user.is_superuser %}<a href = "{% url 'room_admin' room_no %}">투표관리 페이지로 이동</a>{% endif %}<br>
+    A :&nbsp;{{ room.vote_a.count }}<br>
+    B :&nbsp;{{ room.vote_b.count }}<br>
+
+    {% if user.is_authenticated %}
+      내 의견 :&nbsp;{{ opinion }}<br>
+      <form method="post">{% csrf_token %}
+        <button name="choice" value="vote_a">A투표</button>
+        <button name="choice" value="vote_b">B투표</button>
+        <button name="choice" value="vote_cancel">투표취소</button>
+      </form><br>
+    {% endif %}
+
+    <div style = "pointer-events : none">    
+      현재 접속자 수 : {{room.connect_user.count}}
+    </div>
+    <textarea id="chat-log" cols="100" rows="20" readonly></textarea><br>
+
+    {% if user.is_authenticated %}
+      <input id="chat-message-input" type="text" size="100"><br>
+      <input id="chat-message-submit" type="button" value="보내기">
+    {% else %}
+      <a href="{% url 'account_login' %}">로그인 하러가기</a> <br>
+      <a href="{%url 'account_signup' %}">회원가입 하러가기</a>
+    {% endif %}
+    {{ room_no|json_script:"room-no" }}
+
+    <br><br>
+    <a href="{% url 'index' %}">나가기</a>
+    <br><br>
+
+
+    <div>
+      유저리스트<br>
+      {% for person in room.connect_user.all %}
+        {{ person.nickname }}<br>
+      {% empty %}
+        접속중인 유저가 없습니다.<br>
+      {% endfor %}
+    </div>
+
+    <script>
+        const roomNo = JSON.parse(document.getElementById('room-no').textContent);
+
+        const chatSocket = new WebSocket(
+            'ws://'
+            + window.location.host
+            + '/ws/chat/'
+            + roomNo
+            + '/'
+        );
+
+        chatSocket.onmessage = function(e) {
+            const data = JSON.parse(e.data);
+            if (data.message !== '') {
+                document.querySelector('#chat-log').value += (data.message + '\n');
+                
+            }
+            // 아래로 자동 스크롤
+            document.getElementById("chat-log").scrollTop = document.getElementById("chat-log").scrollHeight;
+        };
+
+        chatSocket.onclose = function(e) {
+            console.error('Chat socket closed unexpectedly');
+        };
+
+        document.querySelector('#chat-message-input').focus();
+        document.querySelector('#chat-message-input').onkeyup = function(e) {
+            if (e.keyCode === 13) {  // enter, return
+                document.querySelector('#chat-message-submit').click();
+            }
+        };
+
+        document.querySelector('#chat-message-submit').onclick = function(e) {
+            const messageInputDom = document.querySelector('#chat-message-input');
+            const message = messageInputDom.value;
+            const user = '{{user.nickname}}';
+            chatSocket.send(JSON.stringify({
+                'message': user + ' : ' + message
+            }));
+            messageInputDom.value = '';
+        };
+
+        
+    </script>
+{% endblock contents %}

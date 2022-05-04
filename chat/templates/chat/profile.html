@@ -1,0 +1,28 @@
+{% extends "./base.html" %} 
+
+{% block contents %}
+  <main class="profile-form">
+    <form method="post" enctype="multipart/form-data" autocomplete="off">
+      {% csrf_token %}
+      <div class="profile">
+        <img src="{{ user.profile_pic.url }}"><br>
+      </div><br>
+      <div class="nickname">
+        닉네임<br>
+        {{ profile_user.nickname }}
+      </div><br>
+      <div class="content">
+        소개<br>
+        {{ profile_user.intro }}
+      </div><br><br>
+      <div class="content">
+        보유 포인트<br>
+        {{ profile_user.point }}
+      </div><br>
+      <div class="buttons">
+        <a href="{% url 'profile-update' %}">프로필 수정</a><br>
+        <a href="{% url 'account_change_password' %}">비밀번호 변경</a>
+      </div>
+    </form>
+  </main>
+{% endblock contents %}

@@ -1,0 +1,73 @@
+{% extends "chat/base.html" %}
+
+{% load widget_tweaks %}
+
+{% block contents %}
+  <div class="account-background">
+      <form method="post">
+        {% csrf_token %}
+        <div>
+          이메일<br>
+          {{ form.email|add_class:"cp-input"|attr:"placeholder:이메일"|add_error_class:"error" }}
+          {% for error in form.email.errors %}
+            <div class="error-message">{{ error }}</div>
+          {% endfor %}
+        </div><br>
+        <div>
+          비밀번호<br>
+          {{ form.password1|add_class:"cp-input"|attr:"placeholder:비밀번호"|add_error_class:"error" }}
+          {% for error in form.password1.errors %}
+            <div class="error-message">{{ error }}</div>
+          {% endfor %}
+        </div><br>
+        <div>
+          비밀번호 확인<br>
+          {{ form.password2|add_class:"cp-input"|attr:"placeholder:비밀번호 확인"|add_error_class:"error" }}
+          {% for error in form.password2.errors %}
+            <div class="error-message">{{ error }}</div>
+          {% endfor %}    
+        </div>
+        <div><br>
+          닉네임<br>
+          {{ form.nickname|add_class:"cp-input"|attr:"placeholder:닉네임 (Luck7est에서 사용되는 이름입니다)"|add_error_class:"error" }}
+          {% for error in form.nickname.errors %}
+            <div class="error-message">{{ error }}</div>
+          {% endfor %}
+        </div><br>
+        <div>
+          {{ form.intro|add_class:"cp-textarea"|attr:"placeholder:소개(간단히)"|add_error_class:"error" }}
+          {% for error in form.nickname.errors %}
+            <div class="error-message">{{ error }}</div>
+          {% endfor %}
+        </div><br>
+        <div>
+          프로필 사진<br>
+          {{ form.profile_pic }}
+        </div><br>
+        <button class="cp-button" type="submit">회원가입</button>
+      </form>
+
+      <div class="info">
+        이미 회원이신가요?<a class="link" href="{% url 'account_login' %}">로그인</a>
+      </div>
+    </main>
+  </div>
+
+
+  <style>
+    .cp-input {
+      width: 300px;
+      height: 25px;
+      font-size: 15px
+    }
+    .cp-textarea{
+      width: 300px;
+      font-size: 15px
+    }
+    .cp-button{
+      width: 100px;
+      height: 30px;
+      font-size: 15px;
+    }
+  </style>
+{% endblock contents %}

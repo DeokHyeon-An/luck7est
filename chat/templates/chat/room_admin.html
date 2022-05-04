@@ -1,0 +1,22 @@
+
+{% extends './base.html' %}
+  
+{% block contents %}
+  <form method="post">{% csrf_token %}
+    <br>A투표자 <button name="give_point" value="vote_a">포인트 주기</button><br>
+    {% for person_a in room.vote_a.all %}
+      {{person_a}}<br>
+    {% endfor %}
+
+    <br>B투표자 <button name="give_point" value="vote_b">포인트 주기</button><br>
+    {% for person_b in room.vote_b.all %}
+      {{person_b}}<br>
+    {% endfor %}
+
+    <br><br>
+    <button name="give_point" value="vote_end">투표종료</button>
+
+    <br><br>
+    지금은 정산시 무조건 100포인트씩만 줌
+  </form>
+{% endblock contents %}

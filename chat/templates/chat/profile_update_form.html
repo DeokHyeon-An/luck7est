@@ -1,0 +1,35 @@
+{% extends "./base.html" %}
+
+{% load widget_tweaks %}
+
+{% block contents %}
+<main class="profile-form">
+  <form method="post" enctype="multipart/form-data" autocomplete="off">
+    {% csrf_token %}
+    <div class="profile">
+      <img src="{{ user.profile_pic.url }}"><br>
+      <div class="file">
+        {{ form.profile_pic }}
+      </div>
+    </div><br>
+    <div class="nickname">
+      닉네임<br>
+      {{ form.nickname|add_class:"cp-input"|add_error_class:"error"|attr:"placeholder:닉네임" }}
+      {% for error in form.nickname.errors %}
+        <div class="error-message">{{ error }}</div>
+      {% endfor %}
+    </div><br>
+    <div class="content">
+      소개<br>
+      {{ form.intro|add_class:"cp-input"|add_error_class:"error"|attr:"placeholder:자신을 소개해 주세요!" }}
+      {% for error in form.intro.errors %}
+        <div class="error-message">{{ error }}</div>
+      {% endfor %}
+    </div><br>
+    <div class="buttons">
+      <a class="cp-button secondary cancel" href="{% url 'profile' user.id %}">취소</a>
+      <button class="cp-button" type="submit">완료</button>
+    </div>
+  </form>
+</main>
+{% endblock contents %}

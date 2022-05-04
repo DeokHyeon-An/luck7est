@@ -1,0 +1,43 @@
+
+{% extends './base.html' %}
+  
+{% block contents %}
+    <div style = "pointer-events : none">
+      전체사용자<br>    
+      <script id="_wauowl" style = "pointer-events : none;">var _wau = _wau || []; _wau.push(["colored", "b1iscln2g4", "owl", "ffffff000000"]);</script><script async src="//waust.at/co.js"></script>
+    </div>
+    <br>
+    채팅 방을 골라 입장해 주세요<br><br>
+    주제<br>
+
+    {% comment %}     
+    <input id="room-name-input" type="text" size="100"><br>
+    <input id="room-name-submit" type="button" value="Enter">
+     {% endcomment %}
+
+    {% for room in chatrooms %}
+      <a href = {% url 'room' room.id %}>{{ room.title }}</a> &nbsp;&nbsp; 채팅 접속자 수: {{room.connect_user.count}} <br>
+    {% endfor %}
+    
+    <br><br>포인트 탑10
+    <div>
+      {% for person in point_top10 %}
+        {{person}}&nbsp;&nbsp;{{person.point}}<br>
+      {% endfor %}
+    </div>
+
+    <script>
+        document.querySelector('#room-name-input').focus();
+        document.querySelector('#room-name-input').onkeyup = function(e) {
+            if (e.keyCode === 13) {  // enter, return
+                document.querySelector('#room-name-submit').click();
+            }
+        };
+
+        document.querySelector('#room-name-submit').onclick = function(e) {
+            var roomName = document.querySelector('#room-name-input').value;
+            window.location.pathname = 'chat/' + roomName + '/';
+        };
+    </script>
+{% endblock contents %}
+
