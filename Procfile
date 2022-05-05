@@ -1,3 +1,3 @@
-daphne community_project.asgi:application --port $PORT --bind 0.0.0.0 -v2
+daphne -p 8001 community_project.asgi:application
 
 web: gunicorn community_project.wsgi
