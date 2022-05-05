@@ -1,2 +1,1 @@
-web: daphne -b 0.0.0.0 -p $PORT community_project.asgi:application
-worker: python manage.py runworker -v2
+daphne community_project.asgi:application --port $PORT --bind 0.0.0.0 -v2
