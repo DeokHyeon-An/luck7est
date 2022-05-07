@@ -5,12 +5,12 @@
   <form method="post">{% csrf_token %}
     <br>A투표자 <button name="give_point" value="vote_a">포인트 주기</button><br>
     {% for person_a in room.vote_a.all %}
-      {{person_a}}<br>
+      {{person_a.nickname}}<br>
     {% endfor %}
 
     <br>B투표자 <button name="give_point" value="vote_b">포인트 주기</button><br>
     {% for person_b in room.vote_b.all %}
-      {{person_b}}<br>
+      {{person_b.nickname}}<br>
     {% endfor %}
 
     <br><br>
