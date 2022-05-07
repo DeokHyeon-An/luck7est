@@ -10,9 +10,11 @@ class ChatConsumer(AsyncWebsocketConsumer):
 
         # 확인 필요
         self.room = ChatRoom.objects.get(id=self.room_name)
-        if self.scope["user"]:
+        try:
           self.room.connect_user.add(self.scope["user"])
           self.room.save()
+        except:
+          pass
 
         # Join room group
         await self.channel_layer.group_add(
@@ -25,9 +27,11 @@ class ChatConsumer(AsyncWebsocketConsumer):
     async def disconnect(self, close_code):
         # 확인 필요
         self.room = ChatRoom.objects.get(id=self.room_name)
-        if self.scope["user"]:
+        try:
           self.room.connect_user.remove(self.scope["user"])
           self.room.save()
+        except:
+          pass
 
         # Leave room group
         await self.channel_layer.group_discard(
