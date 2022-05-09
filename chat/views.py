@@ -38,6 +38,7 @@ def check_verified(user):
 @user_passes_test(check_verified, '/account/email-confirmation-required')
 def room(request, room_no):
     room = ChatRoom.objects.get(id=room_no)
+    issue_top10 = Issue.objects.all()[:10]
     opinion = '아직 투표하지 않았습니다.'
 
     if request.user.is_authenticated:
@@ -61,6 +62,7 @@ def room(request, room_no):
     return render(request, 'chat/room.html', {
         'room_no': room_no,
         'room': room,
+        'issue_top10' : issue_top10,
         'opinion': opinion,
     })
 

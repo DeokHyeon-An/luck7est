@@ -1,7 +1,35 @@
 
 {% extends './base.html' %}
-  
+
+{% load static %}
+    
 {% block contents %}
+    <link rel="stylesheet" type="text/css" href="{% static 'chat/styles/style.css' %}">
+
+    <h3>Issue TOP10</h3>
+    <div id='issue-wrap'>
+      {% for issue in issue_top10  %}
+      <div id='issue'>            
+        <span>
+          {{forloop.counter}}. <label for="a{{forloop.counter}}">{{issue.keyword}}</label>
+        </span>
+        <input id="a{{forloop.counter}}" type="checkbox">
+        <div id="issue-detail">     
+          <h2>{{issue.title}}</h2>
+          <p>{{issue.context}}</p>
+          <span><a href='{{issue.link1}}'>link1</a></span>
+          <span><a href='{{issue.link2}}'>link2</a></span>
+          <span><a href='{{issue.link3}}'>link3</a></span>
+          <span style="float: right;"><label for="a{{forloop.counter}}"><<<뒤로</label></span>
+        </div>
+      </div>
+      {% endfor %}
+    </div>
+    <p></p>
+    <br>
+    <br>
+    <br>
+
     <div>방제 : {{ room.title }}</div>
     <br>투표 &nbsp;&nbsp; {% if user.is_superuser %}<a href = "{% url 'room_admin' room_no %}">투표관리 페이지로 이동</a>{% endif %}<br>
     A :&nbsp;{{ room.vote_a.count }}<br>
