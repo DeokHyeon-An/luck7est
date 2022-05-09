@@ -23,7 +23,7 @@ class IndexView(ListView):
     def get_context_data(self, **kwargs):
       context = super().get_context_data(**kwargs)
       point_top10 = User.objects.all().order_by('-point')[:10]
-      issue_top10 = Issue.objects.all()[:10]
+      issue_top10 = Issue.objects.all().order_by('-id')[:10]
       context["point_top10"] = point_top10
       context['issue_top10'] = issue_top10
       return context

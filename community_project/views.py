@@ -1,8 +1,9 @@
 from django.shortcuts import redirect, render
 from django.urls import reverse
-from chat.models import User
+from chat.models import User, ChatRoom
+from issue.models import Issue
 from chat.forms import ProfileForm
-from django.views.generic import DetailView, UpdateView
+from django.views.generic import DetailView, UpdateView, ListView
 from allauth.account.views import PasswordChangeView
 from allauth.account.utils import send_email_confirmation
 from braces.views import LoginRequiredMixin, UserPassesTestMixin
@@ -40,3 +41,14 @@ def account_email_confirmation_required(request):
   send_email_confirmation(request, request.user)
   return render(request, 'chat/email_confirmation_required.html')
 
+class TotalAdminView(ListView):
+    model = ChatRoom
+    template_name = "chat/total_admin.html"
+    context_object_name = "chatrooms"
+    ordering = ["dt_created"]
+
+    def get_context_data(self, **kwargs):
+      context = super().get_context_data(**kwargs)
+      issue_top10 = Issue.objects.all().order_by('-id')[:10]
+      context['issue_top10'] = issue_top10
+      return context

@@ -22,6 +22,7 @@ from . import views
 
 urlpatterns = [
     path('admin/', admin.site.urls),
+    path('total_admin/', views.TotalAdminView.as_view(), name='total_admin'),
     path('chat/', include('chat.urls')),
     path('issue/', include('issue.urls')),
     path('account/email-confirmation-required',views.account_email_confirmation_required,name="account_email_confirmation_required"),

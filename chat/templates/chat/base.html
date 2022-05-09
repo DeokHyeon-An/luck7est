@@ -10,6 +10,9 @@
       <a href="{% url 'index' %}">메인화면</a>
     </div>
     <div style="float:right">
+    {% if user.is_superuser %}
+      <a href="{% url 'total_admin' %}">통합 관리</a>
+    {% endif %}
     {% if user.is_authenticated %}
       <a href="{% url 'profile' user.id %}">내 프로필</a>
       <a href="{% url 'account_logout' %}">로그아웃</a>
