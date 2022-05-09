@@ -1,0 +1,47 @@
+{% load widget_tweaks %}
+<form method='post'>
+    {% csrf_token %}
+    <div>
+        {{form.keyword|add_class:'issue'|attr:'placeholder:키워드'|add_error_class:'error'}}
+        {% for error in form.keyword.errors %}
+            <div class='error-message'>{{error}}</div>
+        {% endfor %}  
+    </div>
+
+    <div>
+        {{form.title|add_class:'issue'|attr:'placeholder:제목'|add_error_class:'error'}}
+        {% for error in form.title.errors %}
+            <div class='error-message'>{{error}}</div>
+        {% endfor %}  
+    </div>
+
+    <div>
+        {{form.context|add_class:'issue'|attr:'placeholder:내용'|add_error_class:'error'}}
+        {% for error in form.context.errors %}
+            <div class='error-message'>{{error}}</div>
+        {% endfor %}  
+    </div>
+
+    <div>
+        {{form.link1|add_class:'issue'|attr:'placeholder:링크1'|add_error_class:'error'}}
+        {% for error in form.link1.errors %}
+            <div class='error-message'>{{error}}</div>
+        {% endfor %}  
+    </div>
+
+    <div>
+        {{form.link2|add_class:'issue'|attr:'placeholder:링크2'|add_error_class:'error'}}
+        {% for error in form.link2.errors %}
+            <div class='error-message'>{{error}}</div>
+        {% endfor %}  
+    </div>
+
+    <div>
+        {{form.link3|add_class:'issue'|attr:'placeholder:링크3'|add_error_class:'error'}}
+        {% for error in form.link3.errors %}
+            <div class='error-message'>{{error}}</div>
+        {% endfor %}  
+    </div>
+    <button type='submit'>등록</button>
+</form>
+

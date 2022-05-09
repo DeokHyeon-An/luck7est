@@ -1,5 +1,6 @@
 from django.shortcuts import render, redirect
 from chat.models import ChatRoom, User
+from issue.models import Issue
 from chat.functions import confirmation_required_redirect, index_redirect
 from django.views.generic import DetailView, ListView
 from django.contrib.auth.decorators import user_passes_test
@@ -22,7 +23,9 @@ class IndexView(ListView):
     def get_context_data(self, **kwargs):
       context = super().get_context_data(**kwargs)
       point_top10 = User.objects.all().order_by('-point')[:10]
+      issue_top10 = Issue.objects.all()[:10]
       context["point_top10"] = point_top10
+      context['issue_top10'] = issue_top10
       return context
 
 

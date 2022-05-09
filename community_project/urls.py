@@ -23,6 +23,7 @@ from . import views
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('chat/', include('chat.urls')),
+    path('issue/', include('issue.urls')),
     path('account/email-confirmation-required',views.account_email_confirmation_required,name="account_email_confirmation_required"),
     path('account/email-confirmation-done',TemplateView.as_view(template_name="chat/email_confirmation_done.html"),name="account_email_confirmation_done"),
     path('account/password/change/', views.CustomPasswordChangeView.as_view(), name="account_password_change"),
