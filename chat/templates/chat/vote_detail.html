@@ -1,0 +1,26 @@
+
+{% extends './base.html' %}
+
+{% load static %}
+    
+{% block contents %}
+  방 제목 : {{ vote.title }} <br><br>
+  투표 제목 : {{ vote.content_vote }} <br>
+  A : {{ vote.content_a }} <br>
+  B : {{ vote.content_b }} <br>
+  <br>
+  A 투표자 ({{ vote.vote_a.count }}) <br>
+  {% for person_a in vote.vote_a.all %}
+    {{person_a.nickname}}<br>
+  {% endfor %}<br>
+  <br>
+  B 투표자 ({{ vote.vote_b.count }}) <br>
+  {% for person_b in vote.vote_b.all %}
+    {{person_b.nickname}}<br>
+  {% endfor %}<br>
+  <br>
+  투표 기간<br>
+  {{ vote.dt_created }} ~ {{ vote.dt_end }}<br>
+  <br>
+  <a href = {% url 'index' %}>돌아가기</a>
+{% endblock contents %}

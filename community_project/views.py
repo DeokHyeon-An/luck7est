@@ -1,6 +1,7 @@
 from django.shortcuts import redirect, render
 from django.urls import reverse
-from chat.models import User, ChatRoom
+from django.db.models import Q
+from chat.models import User, ChatRoom, VoteHistory
 from issue.models import Issue
 from chat.functions import index_redirect
 from chat.forms import ProfileForm
@@ -12,9 +13,11 @@ from braces.views import LoginRequiredMixin, UserPassesTestMixin
 def index(request):
   return redirect('chat/')
 
+
 class CustomPasswordChangeView(PasswordChangeView):
   def get_success_url(self):
       return reverse("index")
+
 
 class ProfileView(DetailView):
   model = User
@@ -25,7 +28,11 @@ class ProfileView(DetailView):
   def get_context_data(self, **kwargs):
     context = super().get_context_data(**kwargs)
     user_id = self.kwargs.get("user_id")
+    vote_history = VoteHistory.objects.filter(Q(vote_b = self.request.user)|Q(vote_a = self.request.user)).distinct()
+
+    context["vote_history"] = vote_history
     return context
+
 
 class ProfileUpdateView(LoginRequiredMixin, UpdateView):
     model = User
@@ -38,9 +45,11 @@ class ProfileUpdateView(LoginRequiredMixin, UpdateView):
     def get_success_url(self):
         return reverse("profile", kwargs=({"user_id": self.request.user.id}))
 
+
 def account_email_confirmation_required(request):
   send_email_confirmation(request, request.user)
   return render(request, 'chat/email_confirmation_required.html')
+
 
 class TotalAdminView(UserPassesTestMixin, ListView):
     model = ChatRoom
@@ -53,7 +62,9 @@ class TotalAdminView(UserPassesTestMixin, ListView):
     def get_context_data(self, **kwargs):
       context = super().get_context_data(**kwargs)
       issue_top10 = Issue.objects.all().order_by('-id')[:10]
+      vote_history = VoteHistory.objects.all()
       context['issue_top10'] = issue_top10
+      context['vote_history'] = vote_history
       return context
 
     def test_func(self, user):

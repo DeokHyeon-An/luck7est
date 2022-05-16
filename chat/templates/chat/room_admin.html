@@ -3,20 +3,37 @@
   
 {% block contents %}
   <form method="post">{% csrf_token %}
-    <br>A투표자 <button name="give_point" value="vote_a">포인트 주기</button><br>
+    방제<br>
+    {{ room.title }}<br><br>
+
+    투표주제<br>
+    {{ room.content_vote }}<br><br>
+
+    투표<br>
+    A : {{ room.content_a }}<br>
+    B : {{ room.content_b }}<br>
+
+    <br>A투표자 ({{room.vote_a.count}})<button name="give_point" value="vote_a">포인트 주기</button><br>
     {% for person_a in room.vote_a.all %}
       {{person_a.nickname}}<br>
     {% endfor %}
-
-    <br>B투표자 <button name="give_point" value="vote_b">포인트 주기</button><br>
+    <br>
+    <br>B투표자 ({{room.vote_b.count}})<button name="give_point" value="vote_b">포인트 주기</button><br>
     {% for person_b in room.vote_b.all %}
       {{person_b.nickname}}<br>
     {% endfor %}
 
     <br><br>
-    <button name="give_point" value="vote_end">투표종료</button>
+    <button name="give_point" value="vote_more">다수에 포인트 주기</button>
 
     <br><br>
     지금은 정산시 무조건 100포인트씩만 줌
+
+    <br><br>
+    <button name="give_point" value="vote_save">투표저장 및 초기화</button>
   </form>
+
+  <br>
+  <a href = {% url 'room' room.id %}>채팅방으로 돌아가기</a><br>
+  <a href = {% url 'index' %}>메인으로 돌아가기</a><br>
 {% endblock contents %}

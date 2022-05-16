@@ -1,5 +1,5 @@
 from django.shortcuts import render, redirect
-from chat.models import ChatRoom, User
+from chat.models import ChatRoom, User, VoteHistory
 from issue.models import Issue
 from chat.functions import confirmation_required_redirect, index_redirect
 from django.views.generic import DetailView, ListView
@@ -66,6 +66,7 @@ def room(request, room_no):
         'opinion': opinion,
     })
 
+
 def check_superuser(user):
     return user.is_superuser
 
@@ -85,7 +86,7 @@ def room_admin(request, room_no):
         for person_b in b_list:
           person_b.point += 100
           person_b.save()
-      else:
+      elif selection == 'vote_more':
         if a_list.count() == b_list.count():
           for person_a in a_list:
             person_a.point += 100
@@ -101,11 +102,36 @@ def room_admin(request, room_no):
           for person_b in b_list:
             person_b.point += 100
             person_b.save()
+      else:
+        temp = VoteHistory.objects.create(
+            title = room.title,
+            content_vote = room.content_vote,
+            content_a = room.content_a,
+            content_b = room.content_b,
+            dt_created = room.dt_created,
+        )
+        temp.vote_a.set(a_list)
+        temp.vote_b.set(b_list)
+        temp.save()
+
+        room.content_vote = ''
+        room.content_a = ''
+        room.content_b = ''
+        room.vote_a.clear()
+        room.vote_b.clear()
+        room.save()
       return redirect(request.META.get('HTTP_REFERER', 'redirect_if_referer_not_found'))
     return render(request, 'chat/room_admin.html', {
         'room_no': room_no,
         'room': room,
     })
+
+
+class VoteHistoryDetailView(DetailView):
+    model = VoteHistory
+    template_name = "chat/vote_detail.html"
+    pk_url_kwarg = "vote_no"
+    context_object_name = "vote"
 
 
 # 참고용

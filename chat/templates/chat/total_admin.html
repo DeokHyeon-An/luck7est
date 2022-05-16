@@ -32,5 +32,12 @@
   {% for room in chatrooms %}
     <a href = {% url 'room' room.id %}>{{ room.title }}</a> &nbsp;&nbsp;&nbsp;&nbsp; <a href = {% url 'room_admin' room.id %}>채팅방 관리</a> <br>
   {% endfor %}
+
+  <br>투표 기록<br>
+  {% for vote in vote_history %}
+    <b>방제 :</b> {{ vote.title }} &nbsp;&nbsp;&nbsp;&nbsp; <b>투표 주제 :</b> {{ vote.content_vote }} &nbsp;&nbsp;&nbsp;&nbsp; <b>투표 날짜 :</b> {{ vote.dt_created }} ~ {{ vote.dt_end }}  &nbsp;&nbsp;&nbsp;&nbsp; <a href = {% url 'vote_detail' vote.id %}>자세히 보기</a> <br>
+  {% empty %}
+    저장된 투표가 없습니다. <br>
+  {% endfor %}
 {% endblock contents %}
 
