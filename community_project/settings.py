@@ -48,6 +48,8 @@ INSTALLED_APPS = [
     'allauth.socialaccount.providers.kakao',
     'allauth.socialaccount.providers.naver',
     'allauth.socialaccount.providers.google',
+    'cloudinary',
+    'cloudinary_storage',
 ]
 
 SITE_ID = 1
@@ -149,6 +151,17 @@ STATICFILES_DIRS = [
 
 MEDIA_ROOT = os.path.join(BASE_DIR, "media")
 MEDIA_URL = "/uploads/"
+
+# Cloudinary stuff
+from decouple import config
+
+CLOUDINARY_STORAGE = {
+    'CLOUD_NAME': config('luck7est', default=""),
+    'API_KEY': config('766122341496665', default=""),
+    'API_SECRET': config('38AjcmPEOcfhWGtmuDumhoicE6o', default=""),
+}
+
+DEFAULT_FILE_STORAGE = 'cloudinary_storage.storage.MediaCloudinaryStorage'
 
 # Auth settings
 
