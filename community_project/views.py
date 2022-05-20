@@ -25,13 +25,25 @@ class ProfileView(DetailView):
   pk_url_kwarg = "user_id"
   context_object_name = "profile_user"
 
-  def get_context_data(self, **kwargs):
-    context = super().get_context_data(**kwargs)
-    user_id = self.kwargs.get("user_id")
-    vote_history = VoteHistory.objects.filter(Q(vote_b = self.request.user)|Q(vote_a = self.request.user)).distinct()
+  # def get_context_data(self, **kwargs):
+  #   context = super().get_context_data(**kwargs)
+  #   user_id = self.kwargs.get("user_id")
+  #   vote_history = VoteHistory.objects.filter(Q(vote_b = self.request.user)|Q(vote_a = self.request.user)).distinct()
 
-    context["vote_history"] = vote_history
-    return context
+  #   context["vote_history"] = vote_history
+  #   return context
+
+
+class UserVoteView(ListView):
+    model = VoteHistory
+    template_name = "chat/user_vote.html"
+    context_object_name = "vote_history"
+    ordering = ["-dt_created"]
+    paginate_by = 10
+
+    def get_queryset(self):
+      user_id = self.kwargs.get("user_id")
+      return VoteHistory.objects.filter(Q(vote_b = self.request.user)|Q(vote_a = self.request.user)).distinct()
 
 
 class ProfileUpdateView(LoginRequiredMixin, UpdateView):

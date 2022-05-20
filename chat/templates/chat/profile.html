@@ -4,9 +4,11 @@
   <main class="profile-form">
     <form method="post" enctype="multipart/form-data" autocomplete="off">
       {% csrf_token %}
+      {% comment %} 추후 프로필사진 추가 예정 
       <div class="profile">
         <img src="{{ user.profile_pic.url }}"><br>
       </div><br>
+       {% endcomment %}
       <div class="nickname">
         닉네임<br>
         {{ profile_user.nickname }}
@@ -25,36 +27,4 @@
       </div>
     </form>
   </main>
-
-  <br>투표 이력<br>
-  {% for vote in vote_history %}
-    <b>방제 :</b> {{vote.title}}  &nbsp;&nbsp;&nbsp;&nbsp; 
-    <b>투표 주제 :</b> {{ vote.content_vote }} &nbsp;&nbsp;&nbsp;&nbsp; 
-    <b>내 의견 : </b> 
-      {% if user in vote.vote_a.all %}
-        {{ vote.content_a }}  &nbsp;&nbsp;&nbsp;&nbsp;
-        <b>투표 결과 : </b> 
-        {% if vote.vote_a.count > vote.vote_b.count %}
-          승리(포인트 획득)  &nbsp;&nbsp;&nbsp;&nbsp;
-        {% elif vote.vote_a.count == vote.vote_b.count %}
-          무승부(포인트 획득)  &nbsp;&nbsp;&nbsp;&nbsp;
-        {% else %}
-          패배(포인트 X)  &nbsp;&nbsp;&nbsp;&nbsp;
-        {% endif %}
-      {% else %}
-        {{ vote.content_b }}
-        <b>투표 결과 : </b>  &nbsp;&nbsp;&nbsp;&nbsp; 
-        {% if vote.vote_a.count < vote.vote_b.count %}
-          승리(포인트 획득)  &nbsp;&nbsp;&nbsp;&nbsp;
-        {% elif vote.vote_a.count == vote.vote_b.count %}
-          무승부(포인트 획득)  &nbsp;&nbsp;&nbsp;&nbsp;
-        {% else %}
-          패배(포인트 X)  &nbsp;&nbsp;&nbsp;&nbsp;
-        {% endif %}
-      {% endif %}
-    <b>투표 날짜 :</b> {{ vote.dt_created }} ~ {{ vote.dt_end }}  &nbsp;&nbsp;&nbsp;&nbsp; 
-    <a href = {% url 'vote_detail' vote.id %}>자세히 보기</a> <br>
-  {% empty %}
-    참여 완료 및 종료된 투표가 없습니다.
-  {% endfor %}
 {% endblock contents %}

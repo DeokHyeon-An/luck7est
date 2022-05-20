@@ -32,6 +32,7 @@ urlpatterns = [
     path('', views.index, name='index'),
     path('users/<int:user_id>/', views.ProfileView.as_view(), name='profile'),
     path('edit-profile/', views.ProfileUpdateView.as_view(), name='profile-update'),
+    path('votes/<int:user_id>/', views.UserVoteView.as_view(), name='user-vote'),
 ]
 
 urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
