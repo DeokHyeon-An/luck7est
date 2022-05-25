@@ -47,40 +47,26 @@ label:hover {
 
 #issue-detail
 {
-    box-sizing: border-box;
     display: none;
     position: absolute;
     background-color: white;
     z-index: 10;
-    width: 23%;
+    width: 20%;
     left: 10px;
-    top: 18%;
+    top: 20%;
     border: 1px solid green;
-    height: 75%;
-    padding: 5%;
 }
 
-
-#a1:checked + #issue-detail, 
-#a2:checked + #issue-detail, 
-#a3:checked + #issue-detail, 
-#a4:checked + #issue-detail, 
-#a5:checked + #issue-detail, 
+#a1:checked + #issue-detail,
+#a2:checked + #issue-detail,
+#a3:checked + #issue-detail,
+#a4:checked + #issue-detail,
+#a5:checked + #issue-detail,
 #a6:checked + #issue-detail,
-#a7:checked + #issue-detail, 
-#a8:checked + #issue-detail, 
-#a9:checked + #issue-detail, 
+#a7:checked + #issue-detail,
+#a8:checked + #issue-detail,
+#a9:checked + #issue-detail,
 #a10:checked + #issue-detail
 {
     display:block;
 }
-
-.context{
-    line-height: 1.2rem;
-    height: 18rem;    
-    overflow: hidden;
-    display: -webkit-box;
-    -webkit-line-clamp: 15;
-    -webkit-box-orient: vertical;
-}
-

@@ -11,8 +11,9 @@
       <script id="_wauowl" style = "pointer-events : none;">var _wau = _wau || []; _wau.push(["colored", "b1iscln2g4", "owl", "ffffff000000"]);</script><script async src="//waust.at/co.js"></script>
     </div>
 
-    <h3>Issue TOP10</h3>
+    
     <div id='issue-wrap'>
+      <h3>ISSUE TOP10</h3>
       {% for issue in issue_top10  %}
       <div id='issue'>            
         <span>
@@ -21,33 +22,40 @@
         <input id="a{{forloop.counter}}" type="checkbox">
         <div id="issue-detail">     
           <h2>{{issue.title}}</h2>
-          <p>{{issue.context}}</p>
+          <p class='context'>{{issue.context}}</p>
           <span><a href='{{issue.link1}}'>link1</a></span><br>
           <span><a href='{{issue.link2}}'>link2</a></span><br>
           <span><a href='{{issue.link3}}'>link3</a></span>
           <span style="float: right;"><label for="a{{forloop.counter}}"><<<뒤로</label></span>
         </div>
       </div>
+      
       {% endfor %}
     </div>
-    <p></p>
-    <br>
-    <br>
-    <br>
     
-    채팅 방을 골라 입장해 주세요<br><br>
-    주제<br>
 
+    <div id='chat-wrap'>
+      <h3>NOW ON</h3>
 
-    {% for room in chatrooms %}
-      <a href = {% url 'room' room.id %}>{{ room.title }}</a> &nbsp;&nbsp; 채팅 접속자 수: {{room.connect_user.count}} <br>
-    {% endfor %}
-    
-    <br><br>포인트 탑10
-    <div>
-      {% for person in point_top10 %}
-        {{person.nickname}}&nbsp;&nbsp;{{person.point}}<br>
+      {% for room in chatrooms %}
+        <div class="card" style="width: 18rem; float:left;">
+          <img src="https://images.unsplash.com/photo-1577563908411-5077b6dc7624?crop=entropy&cs=tinysrgb&fm=jpg&ixlib=rb-1.2.1&q=80&raw_url=true&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1170" class="card-img-top" alt="...">
+          <div class="card-body">
+            <h5 class="card-title" style = "font-weight: bold;">{{ room.title }}</h5>
+            <p class="card-text">접속자 수: {{room.connect_user.count}}</p>
+            <a href="{% url 'room' room.id %}" class="btn btn-primary">채팅방 입장</a>
+          </div>
+        </div>
       {% endfor %}
+    </div>
+    
+    <div id='point-rank-wrap'>
+      <h3>POINT TOP10</h3>
+        <div>
+          {% for person in point_top10 %}
+            {{person.nickname}}&nbsp;&nbsp;{{person.point}}<br>
+          {% endfor %}
+        </div>
     </div>
 
 {% endblock contents %}

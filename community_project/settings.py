@@ -177,6 +177,9 @@ ACCOUNT_EMAIL_CONFIRMATION_AUTHENTICATED_REDIRECT_URL = "account_email_confirmat
 ACCOUNT_EMAIL_CONFIRMATION_ANONYMOUS_REDIRECT_URL = "account_email_confirmation_done"
 ACCOUNT_EMAIL_SUBJECT_PREFIX = ""
 
+# SOCIALLOGIN SETTING
+SOCIALACCOUNT_LOGIN_ON_GET=True # for rightaway social login
+
 # Email settings
 
 EMAIL_BACKEND = "django.core.mail.backends.smtp.EmailBackend"

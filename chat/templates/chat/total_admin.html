@@ -9,22 +9,24 @@
   이슈관리<br>
   <a href="{% url 'issue-create' %}">이슈 추가하기</a><br><br>
   현재 이슈 현황<br>
-  {% for issue in issue_top10  %}
-  <div id='issue'>            
-    <span>
-      {{forloop.counter}}. <label for="a{{forloop.counter}}">{{issue.keyword}}</label>
-    </span>
-    <input id="a{{forloop.counter}}" type="checkbox">
-    <div id="issue-detail">     
-      <h2>{{issue.title}}</h2>
-      <p>{{issue.context}}</p>
-      <span><a href='{{issue.link1}}'>link1</a></span><br>
-      <span><a href='{{issue.link2}}'>link2</a></span><br>
-      <span><a href='{{issue.link3}}'>link3</a></span>
-      <span style="float: right;"><label for="a{{forloop.counter}}"><<<뒤로</label></span>
+  <div id='issue-wrap'>
+    {% for issue in issue_top10  %}
+    <div id='issue'>            
+      <span>
+        {{forloop.counter}}. <label for="a{{forloop.counter}}">{{issue.keyword}}</label>
+      </span>
+      <input id="a{{forloop.counter}}" type="checkbox">
+      <div id="issue-detail">     
+        <h2>{{issue.title}}</h2>
+        <p>{{issue.context}}</p>
+        <span><a href='{{issue.link1}}'>link1</a></span><br>
+        <span><a href='{{issue.link2}}'>link2</a></span><br>
+        <span><a href='{{issue.link3}}'>link3</a></span>
+        <span style="float: right;"><label for="a{{forloop.counter}}"><<<뒤로</label></span>
+      </div>
     </div>
+    {% endfor %}
   </div>
-  {% endfor %}
   <p></p>
   <br>
 

@@ -1,6 +1,7 @@
 {% extends "chat/base.html" %}
 
 {% load widget_tweaks %}
+{% load socialaccount%}
 
 {% block contents %}
   <div class="account-background">
@@ -40,17 +41,15 @@
             <div class="error-message">{{ error }}</div>
           {% endfor %}
         </div><br>
-        <div>
-          프로필 사진<br>
-          {{ form.profile_pic }}
-        </div><br>
         <button class="cp-button" type="submit">회원가입</button>
       </form>
 
       <div class="info">
         이미 회원이신가요?<a class="link" href="{% url 'account_login' %}">로그인</a>
       </div>
-    </main>
+      <div class='social-login'>
+        <a href="{% provider_login_url 'kakao' %}">카카오 로그인</a>
+      </div>
   </div>
 
 

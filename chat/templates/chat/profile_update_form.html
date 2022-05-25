@@ -6,12 +6,12 @@
 <main class="profile-form">
   <form method="post" enctype="multipart/form-data" autocomplete="off">
     {% csrf_token %}
-    <div class="profile">
+    {% comment %} <div class="profile">
       <img src="{{ user.profile_pic.url }}"><br>
       <div class="file">
         {{ form.profile_pic }}
       </div>
-    </div><br>
+    </div><br> {% endcomment %}
     <div class="nickname">
       닉네임<br>
       {{ form.nickname|add_class:"cp-input"|add_error_class:"error"|attr:"placeholder:닉네임" }}

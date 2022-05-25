@@ -41,6 +41,13 @@ def room(request, room_no):
     issue_top10 = Issue.objects.all()[:10]
     opinion = '아직 투표하지 않았습니다.'
 
+    if room.vote_a.count() == 0 and room.vote_b.count() == 0:
+      a_ratio = 0
+      b_ratio = 0
+    else:
+      a_ratio = (room.vote_a.count() / (room.vote_a.count() + room.vote_b.count()))*100
+      b_ratio = (room.vote_b.count() / (room.vote_a.count() + room.vote_b.count()))*100
+
     if request.user.is_authenticated:
       if room.vote_a.filter(email = request.user.email):
         opinion = 'A'
@@ -64,6 +71,8 @@ def room(request, room_no):
         'room': room,
         'issue_top10' : issue_top10,
         'opinion': opinion,
+        'a_ratio': a_ratio,
+        'b_ratio': b_ratio,
     })
 
 

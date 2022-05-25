@@ -23,7 +23,8 @@
       </div><br>
       <div class="buttons">
         <a href="{% url 'profile-update' %}">프로필 수정</a><br>
-        <a href="{% url 'account_change_password' %}">비밀번호 변경</a>
+        <a href="{% url 'account_change_password' %}">비밀번호 변경</a><br><br><br>
+        <a href="{% url 'user-vote' user.id %}">내 투표이력</a>
       </div>
     </form>
   </main>
