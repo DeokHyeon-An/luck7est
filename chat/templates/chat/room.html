@@ -4,7 +4,7 @@
 {% load static %}
     
 {% block contents %}
-    <navbar style= "width:15%; border: 5px solid black; text-align:center; height:calc(100% - 108px); margin-left:15px; position:fixed;">
+    <navbar style= "width:15%; border: 5px solid black; text-align:center; height:calc(100% - 110px); margin-left:15px; position:fixed;">
       <div style="font-weight:bold; font-size:30px;"> {{ room.chat_category }} </div><br>
       {% for room_other in room_all %}
         {% if room_other.chat_category == room.chat_category %}
@@ -13,7 +13,7 @@
       {% endfor %}
     </navbar>
 
-    <navbar style= "width:15%; border: 5px solid black; text-align:center; height:calc(100% - 108px); margin-left:calc(85% - 15px); position:fixed;">
+    <navbar style= "width:15%; border: 5px solid black; text-align:center; height:calc(100% - 110px); margin-left:calc(85% - 15px); position:fixed;">
       <div style="font-weight:bold; font-size:20px;"> 유저리스트 </div><br>
       {% for person in room.connect_user.all %}
         {{ person.nickname }}<br>
