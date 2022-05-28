@@ -21,9 +21,9 @@
         <div id="issue-detail" style="width:100%; top:50px; left:0; height:92%;">     
           <h2>{{issue.title}}</h2>
           <p class='context'>{{issue.context}}</p>
-          <span><a href='{{issue.link1}}'>link1</a></span><br>
-          <span><a href='{{issue.link2}}'>link2</a></span><br>
-          <span><a href='{{issue.link3}}'>link3</a></span>
+          {% if issue.link1 %}<span><a href='{{issue.link1}}'>link1</a></span><br>{% endif %}
+          {% if issue.link2 %}<span><a href='{{issue.link2}}'>link2</a></span><br>{% endif %}
+          {% if issue.link3 %}<span><a href='{{issue.link3}}'>link3</a></span>{% endif %}
           <span style="float: right;"><label for="a{{forloop.counter}}"><<<뒤로</label></span>
         </div>
       </div>      

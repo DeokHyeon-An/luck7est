@@ -32,10 +32,11 @@ class ChatRoom(models.Model):
     ("시사이슈", "시사이슈"),
     ("연예", "연예"),
     ("스포츠", "스포츠"),
-    ("기타", "기타"),
+    ("주식", "주식"),
+    ("게임", "게임"),
   ]
 
-  chat_category = models.CharField(max_length=50, choices=CATEGORY_CHOICES, default="기타")
+  chat_category = models.CharField(max_length=50, choices=CATEGORY_CHOICES)
 
   title = models.CharField(max_length=50)
 
