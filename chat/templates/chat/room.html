@@ -8,11 +8,7 @@
       <div style="font-weight:bold; font-size:30px;"> {{ room.chat_category }} </div><br>
       {% for room_other in room_all %}
         {% if room_other.chat_category == room.chat_category %}
-          {% if room_other == room %}
-            <div><a href="{% url 'room' room_other.id %}" style="font-weight:bold; text-decoration:none; color:black; font-size:20px;">{{ room_other }}</a></div>
-          {% else %}
-            <div><a href="{% url 'room' room_other.id %}" style="text-decoration:none; color:black; font-size:20px;">{{ room_other }}</a></div>
-          {% endif %}
+          <div><a href="{% url 'room' room_other.id %}" style="{% if room_other == room %}font-weight:bold; {% endif %}text-decoration:none; color:black; font-size:20px;">{{ room_other }}</a></div>
         {% endif %}
       {% endfor %}
     </navbar>
