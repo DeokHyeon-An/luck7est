@@ -4,64 +4,82 @@
 {% load static %}
     
 {% block contents %}
-    <div style = "font-size:25px;"><b>{{ room.title }} 토론방</b>&nbsp;&nbsp;&nbsp;&nbsp;{% if user.is_superuser %}<a href = "{% url 'room_admin' room_no %}">투표관리 페이지로 이동</a>{% endif %}</div>
-    
-    <div style = "pointer-events : none">    
-      <br><b>현재 접속자 수 : </b>{{room.connect_user.count}}
-    </div>
-    
-    <br>
-    {% if room.content_vote %}
-      <b>투표 주제 : </b>{{ room.content_vote }}<br>
-      A : {{ room.content_a }}<br>
-      B : {{ room.content_b }}<br>
-      
-      {% if user.is_authenticated %}
-        <br><b>내 의견 :</b>&nbsp;{{ opinion }}<br>
-        <form method="post">{% csrf_token %}
-          <button name="choice" value="vote_a">A투표</button>
-          <button name="choice" value="vote_b">B투표</button>
-          <button name="choice" value="vote_cancel">투표취소</button>
-        </form>
-      {% endif %}
+    <navbar style= "width:15%; border: 5px solid black; text-align:center; height:calc(100% - 108px); margin-left:15px; position:fixed;">
+      <div style="font-weight:bold; font-size:30px;"> {{ room.chat_category }} </div><br>
+      {% for room_other in room_all %}
+        {% if room_other.chat_category == room.chat_category %}
+          {% if room_other == room %}
+            <div><a href="{% url 'room' room_other.id %}" style="font-weight:bold; text-decoration:none; color:black; font-size:20px;">{{ room_other }}</a></div>
+          {% else %}
+            <div><a href="{% url 'room' room_other.id %}" style="text-decoration:none; color:black; font-size:20px;">{{ room_other }}</a></div>
+          {% endif %}
+        {% endif %}
+      {% endfor %}
+    </navbar>
 
-      <br><b>투표 현황</b><br>
-      <div class="progress" style="height: 4rem; width:96%; margin-left:auto; margin-right:auto;">
-        <div class="progress-bar" role="progressbar" style="width: {{ a_ratio }}%; font-size:15px; font-weight:bold;" aria-valuenow="{{ a_ratio }}" aria-valuemin="0" aria-valuemax="100">A : {{ room.content_a }}<br>{{ room.vote_a.count }}</div>
-        <div class="progress-bar bg-success" role="progressbar" style="width: {{ b_ratio }}%; font-size:15px; font-weight:bold;" aria-valuenow="{{ b_ratio }}" aria-valuemin="0" aria-valuemax="100">B : {{ room.content_b }}<br>{{ room.vote_b.count }}</div>
-      </div>
-    {% else %}
-      진행중인 투표가 없습니다.<br><br>
-    {% endif %} 
-
-    <div style="width:96%; margin-left:auto; margin-right:auto;">
-      <textarea id="chat-log" cols="100" rows="20" readonly style="width:100%;"></textarea><br>
-    </div>
-
-    {% if user.is_authenticated %}
-      <div style="width:96%; margin-left:auto; margin-right:auto;">
-        <input id="chat-message-input" type="text" style="width:94%; margin-left:0; margin-right:0;">
-        <input id="chat-message-submit" type="button" value="보내기" stlye="width:5%; margin-left:0; margin-right:0;">
-      </div>
-    {% else %}
-      <a href="{% url 'account_login' %}">로그인 하러가기</a> <br>
-      <a href="{%url 'account_signup' %}">회원가입 하러가기</a>
-    {% endif %}
-
-    {{ room_no|json_script:"room-no" }}
-
-    <br>
-    <a href="{% url 'index' %}">나가기</a>
-    <br><br>
-
-
-    <div>
-      유저리스트<br>
+    <navbar style= "width:15%; border: 5px solid black; text-align:center; height:calc(100% - 108px); margin-left:calc(85% - 15px); position:fixed;">
+      <div style="font-weight:bold; font-size:20px;"> 유저리스트 </div><br>
       {% for person in room.connect_user.all %}
         {{ person.nickname }}<br>
       {% empty %}
         접속중인 유저가 없습니다.<br>
       {% endfor %}
+    </navbar>
+
+    <div class = "wrap-contents" style="margin-left:calc(15% + 30px); margin-right:calc(15% + 30px);">
+      <div style = "font-size:25px;"><b>{{ room.title }} 토론방</b>&nbsp;&nbsp;&nbsp;&nbsp;{% if user.is_superuser %}<a href = "{% url 'room_admin' room_no %}">투표관리 페이지로 이동</a>{% endif %}</div>
+      
+      <div style = "pointer-events : none">    
+        <br><b>현재 접속자 수 : </b>{{room.connect_user.count}}
+      </div>
+      
+      <br>
+      {% if room.content_vote %}
+        <b>투표 주제 : </b>{{ room.content_vote }}<br>
+        A : {{ room.content_a }}<br>
+        B : {{ room.content_b }}<br>
+        
+        {% if user.is_authenticated %}
+          <br><b>내 의견 :</b>&nbsp;{{ opinion }}<br>
+          <form method="post">{% csrf_token %}
+            <button name="choice" value="vote_a">A투표</button>
+            <button name="choice" value="vote_b">B투표</button>
+            <button name="choice" value="vote_cancel">투표취소</button>
+          </form>
+        {% endif %}
+
+        <br><b>투표 현황</b><br>
+        <div class="progress" style="height: 4rem; width:90%; margin-left:auto; margin-right:auto;">
+          <div class="progress-bar" role="progressbar" style="width: {{ a_ratio }}%; font-size:15px; font-weight:bold;" aria-valuenow="{{ a_ratio }}" aria-valuemin="0" aria-valuemax="100">A : {{ room.content_a }}<br>{{ room.vote_a.count }}</div>
+          <div class="progress-bar bg-success" role="progressbar" style="width: {{ b_ratio }}%; font-size:15px; font-weight:bold;" aria-valuenow="{{ b_ratio }}" aria-valuemin="0" aria-valuemax="100">B : {{ room.content_b }}<br>{{ room.vote_b.count }}</div>
+        </div>
+      {% else %}
+        <b>진행중인 투표가 없습니다.</b><br><br>
+      {% endif %} 
+
+        <textarea id="chat-log" cols="100" rows="20" readonly style="width:90%; margin-left:auto; margin-right:auto; display:block;"></textarea>
+
+      {% if user.is_authenticated %}
+        <div style="width:90%; margin-left:auto; margin-right:auto;">
+          <input id="chat-message-input" type="text" style="width:calc(100% - 86px); margin-left:0; margin-right:0;">
+          <input id="chat-message-submit" type="button" value="보내기" style="width:80px; margin-left:0; margin-right:0;">
+        </div>
+      {% else %}
+        <br>
+        <a href="{% url 'account_login' %}">로그인 하러가기</a> <br>
+        <a href="{%url 'account_signup' %}">회원가입 하러가기</a>
+      {% endif %}
+
+      {{ room_no|json_script:"room-no" }}
+
+      <br>
+      <a href="{% url 'index' %}">나가기</a>
+      <br><br>
+
+
+      <div>
+
+      </div>
     </div>
 
     <script>

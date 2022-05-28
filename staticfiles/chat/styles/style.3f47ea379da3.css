@@ -1,4 +1,4 @@
-#issue-wrap {
+/* #issue-wrap {
     display: inline-block;
     float: left;
     width: 20%;
@@ -23,14 +23,13 @@
     left: 5%;    
     padding: 1% 2%;
     font-size: 1.2rem;
-}
+} */
 
 
 #issue {
     display: inline-block;
     /* float: left; */
-    width: 95%;
-    height: 80%;    
+    width: 95%;    
     border: 1px solid;
     padding: 3%;
     margin: 2.5% 0;
@@ -54,7 +53,7 @@ label:hover {
     z-index: 10;
     width: 23%;
     left: 10px;
-    top: 20%;
+    top: 18%;
     border: 1px solid green;
     height: 75%;
     padding: 5%;
@@ -76,8 +75,8 @@ label:hover {
 }
 
 .context{
-    line-height: 1.2em;
-    height: 18em;    
+    line-height: 1.2rem;
+    height: 18rem;    
     overflow: hidden;
     display: -webkit-box;
     -webkit-line-clamp: 15;

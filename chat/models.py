@@ -1,6 +1,9 @@
+from __future__ import division
+from unicodedata import category
 from django.db import models
 from django.contrib.auth.models import AbstractUser
 from chat.validators import validate_no_special_characters
+from django.db import connection
 
 # Create your models here.
 class User(AbstractUser):
@@ -25,6 +28,15 @@ class User(AbstractUser):
   
 
 class ChatRoom(models.Model):
+  CATEGORY_CHOICES = [
+    ("시사이슈", "시사이슈"),
+    ("연예", "연예"),
+    ("스포츠", "스포츠"),
+    ("기타", "기타"),
+  ]
+
+  chat_category = models.CharField(max_length=50, choices=CATEGORY_CHOICES, default="기타")
+
   title = models.CharField(max_length=50)
 
   content_vote = models.CharField(max_length=50, blank=True)
@@ -47,6 +59,11 @@ class ChatRoom(models.Model):
 
   def __str__(self):
     return self.title
+  
+  @classmethod
+  def truncate(cls):
+      with connection.cursor() as cursor:
+          cursor.execute('TRUNCATE TABLE "{0}" CASCADE'.format(cls._meta.db_table))
 
 class VoteHistory(models.Model):
   title = models.CharField(max_length=50)
