@@ -6,40 +6,43 @@
 {% block contents %}
   <link rel="stylesheet" type="text/css" href="{% static 'chat/styles/style.css' %}">
 
-  이슈관리<br>
-  <a href="{% url 'issue-create' %}">이슈 추가하기</a><br><br>
-  현재 이슈 현황<br>
-  <div id='issue-wrap'>
+  <div id='issue-wrap' style="width:20%; font-size:1.2rem; font-weight:bold; height:calc(100% - 112px); margin-left:15px; position:fixed; border:1px solid black; padding:5px;">
+    이슈관리<br>
+    <a href="{% url 'issue-create' %}">이슈 추가하기</a><br><br>
+    현재 이슈 현황<br>
+    <h3 style="font-size:30px; font-weight:bold;">ISSUE TOP10</h3>
     {% for issue in issue_top10  %}
-    <div id='issue'>            
+    <div id='issue' style="margin-bottom:5px;">            
       <span>
         {{forloop.counter}}. <label for="a{{forloop.counter}}">{{issue.keyword}}</label>
       </span>
       <input id="a{{forloop.counter}}" type="checkbox">
-      <div id="issue-detail">     
+      <div id="issue-detail" style="width:100%; top:50px; left:0; height:92%;">     
         <h2>{{issue.title}}</h2>
-        <p>{{issue.context}}</p>
+        <p class='context'>{{issue.context}}</p>
         <span><a href='{{issue.link1}}'>link1</a></span><br>
         <span><a href='{{issue.link2}}'>link2</a></span><br>
         <span><a href='{{issue.link3}}'>link3</a></span>
         <span style="float: right;"><label for="a{{forloop.counter}}"><<<뒤로</label></span>
       </div>
-    </div>
+    </div>      
     {% endfor %}
   </div>
-  <p></p>
-  <br>
 
-  <br>채팅방 관리<br>
-  {% for room in chatrooms %}
-    <a href = {% url 'room' room.id %}>{{ room.title }}</a> &nbsp;&nbsp;&nbsp;&nbsp; <a href = {% url 'room_admin' room.id %}>채팅방 관리</a> <br>
-  {% endfor %}
+  <div style="width:60%; height:calc(100% - 112px); margin-left:calc(40% - 15px); position:fixed; border:1px solid black; padding:5px;">
+    <div style="text-align:center; font-size:1.2rem; font-weight:bold; text-algin:center;">투표 기록</div><br>
+    {% for vote in vote_history %}
+      <b>방제 :</b> {{ vote.title }} &nbsp;&nbsp;&nbsp;&nbsp; <b>투표 주제 :</b> {{ vote.content_vote }} &nbsp;&nbsp;&nbsp;&nbsp; <b>투표 날짜 :</b> {{ vote.dt_created }} ~ {{ vote.dt_end }}  &nbsp;&nbsp;&nbsp;&nbsp; <a href = {% url 'vote_detail' vote.id %}>자세히 보기</a> <br>
+    {% empty %}
+      저장된 투표가 없습니다. <br>
+    {% endfor %}
+  </div>
 
-  <br>투표 기록<br>
-  {% for vote in vote_history %}
-    <b>방제 :</b> {{ vote.title }} &nbsp;&nbsp;&nbsp;&nbsp; <b>투표 주제 :</b> {{ vote.content_vote }} &nbsp;&nbsp;&nbsp;&nbsp; <b>투표 날짜 :</b> {{ vote.dt_created }} ~ {{ vote.dt_end }}  &nbsp;&nbsp;&nbsp;&nbsp; <a href = {% url 'vote_detail' vote.id %}>자세히 보기</a> <br>
-  {% empty %}
-    저장된 투표가 없습니다. <br>
-  {% endfor %}
+  <div style="margin-left:calc(20% + 30px); margin-right:calc(60% + 30px); text-align:center; font-size:1.2rem; font-weight:bold; height:calc(100% - 112px); border:1px solid black; padding:5px;">
+    채팅방 관리<br><br>
+    {% for room in chatrooms %}
+      <a href = {% url 'room' room.id %}>{{ room.title }}</a> &nbsp;&nbsp;&nbsp;&nbsp; <a href = {% url 'room_admin' room.id %}>채팅방 관리</a> <br>
+    {% endfor %}
+  </div>
 {% endblock contents %}
 
