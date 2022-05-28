@@ -38,8 +38,8 @@
     {% endfor %}
   </div>
 
-  <div style="margin-left:calc(20% + 30px); margin-right:calc(60% + 30px); text-align:center; font-size:1.2rem; font-weight:bold; height:calc(100% - 112px); border:1px solid black; padding:5px;">
-    채팅방 관리<br><br>
+  <div style="margin-left:calc(20% + 30px); margin-right:calc(60% + 30px); text-align:center; height:calc(100% - 112px); border:1px solid black; padding:5px;">
+    <div style="font-size:1.2rem; font-weight:bold; text-algin:center;">채팅방 관리</div><br>
     {% for room in chatrooms %}
       <a href = {% url 'room' room.id %}>{{ room.title }}</a> &nbsp;&nbsp;&nbsp;&nbsp; <a href = {% url 'room_admin' room.id %}>채팅방 관리</a> <br>
     {% endfor %}
