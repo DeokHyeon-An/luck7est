@@ -91,7 +91,8 @@
 
         chatSocket.onmessage = function(e) {
             const data = JSON.parse(e.data);
-            if (data.message !== '') {
+            const only_message = data.message.split(' : ');
+            if (only_message[1] !== '') {
                 document.querySelector('#chat-log').value += (data.message + '\n');
                 
             }
