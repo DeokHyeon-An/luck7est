@@ -75,11 +75,15 @@ label:hover {
 }
 
 .context{
-    line-height: 1.2rem;
-    height: 18rem;    
-    overflow: hidden;
-    display: -webkit-box;
-    -webkit-line-clamp: 15;
-    -webkit-box-orient: vertical;
+  overflow: auto;
+  line-height: 1.2rem;
+  height: 18rem;    
+  
+  /* 줄여서 보여줄 때
+  overflow: hidden;
+  display: -webkit-box;
+  -webkit-line-clamp: 15;
+  -webkit-box-orient: vertical; 
+  */
 }
 
